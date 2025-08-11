@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search Links</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            background-color: #2c64b8;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .grid-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: white;
+            text-align: center;
+        }
+        .grid-item a {
+            text-decoration: none;
+            color: #2c64b8;
+            font-weight: bold;
+        }
+        .grid-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div style="display: flex; justify-content: flex-end;">
+            <a href="/">[Return]</a>
+        </div>
+        <div style="text-align: left;">
+            <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+                <img src="static/Help-JobSearch.png" style="height: 90px; display: block;">
+            </a>
+        </div
+
+        <h2>Job Search Links</h2>
+        <div class="grid-container">
+            <div class="grid-item"><a href="https://www.betterteam.com/job-boards">Job Board Reviews</a></div>
+            <div class="grid-item"><a href="https://www.google.com/search?q=Job+boards+near+me">Job Boards</a></div>
+            <div class="grid-item"><a href="https://www.google.com/search?q=Job+boards">Local Job Boards</a></div>
+            <div class="grid-item"><a href="https://www.indeed.com/">Indeed</a></div>
+
+            <div class="grid-item"><a href="https://jobs.google.com/about/">Google for Jobs</a></div>
+            <div class="grid-item"><a href="https://www.linkedin.com/feed/">Linked In</a></div>
+            <div class="grid-item"><a href="https://www.ziprecruiter.com/jobs-search?lvk=GmjDX3PHyfLewwhg0ZFH0w.--Nrz8ouUds">Zip Recruiter</a></div>
+            <div class="grid-item"><a href="https://www.careerbuilder.com/">Career Builder</a></div>
+
+            <div class="grid-item"><a href="https://www.monster.com/">Monster</a></div>
+            <div class="grid-item"><a href="https://www.snagajob.com/">Snagajob</a></div>
+            <div class="grid-item"><a href="https://www.craigslist.org/about/sites#US">Craigslist Jobs</a></div>
+            <div class="grid-item"><a href="https://www.talent.com/">Talent</a></div>
+
+            <div class="grid-item"><a href="https://www.lensa.com/">Lensa</a></div>
+            <div class="grid-item"><a href="https://www.themuse.com/">themuse</a></div>
+            <div class="grid-item"><a href="https://www.flexjobs.com/homevariant/t1">Flex Jobs</a></div>
+            <div class="grid-item"><a href="https://careers.churchofjesuschrist.org/en/sites/ChurchEmployment">Church Employment</a></div>
+
+            <div class="grid-item"><a href="https://www.google.com/search?q=government+unemployment+website">Government Programs</a></div>
+            <div class="grid-item"><a href="https://des.az.gov/services/employment/job-seekers">State Employment Services</a></div>
+            <div class="grid-item"><a href="https://www.google.com/search?q=chamber+of+commerce+near+me">Chamber of Commerce</a></div>
+            <div class="grid-item"><a href="https://www.google.com/search?q=Job+fairs+near+me">Community Job Fairs</a></div>
+
+        </div>
+    </div>
+    <script>
+        function openSameSizePopup() {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          const left = window.screenX;
+          const top = window.screenY;
+
+          window.open(
+            'job-search-help',
+            'videoWindow',
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+          );
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Support Hub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .banner {
+      background-color: #0044cc;
+      color: white;
+      padding: 30px;
+      font-size: 24px;
+    }
+
+    .banner a {
+      color: #ffdd57;
+      font-size: 18px;
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .links a {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .links a:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 0;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 640px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <a href="#" onclick="openSameSizePopup()"><h1>Job Support Hub</h1></a>
+    <a href="#" onclick="openSameSizePopup()" title="Watch Introduction Video">
+       <img src="static/InterviewVideoArrow.png" style="height: 120px; vertical-align: middle; 60px;">
+    </a>
+<!--
+    <a href="#" onclick="openSameSizePopup()">Watch Introduction Video</a>
+-->
+  </div>
+
+  <div class="container">
+    <div class="links">
+      <a href="spiritual-guide">Spiritual Guide & Tips</a>
+      <a href="ministers-role">Providing a Minister to Support</a>
+      <a href="resume-draft">Completing a Resume</a>
+      <a href="resume-submit2ai">AI Improvement of Resume</a>
+      <a href="cover-letter">Completing a Cover Letter</a>
+      <a href="cover-submit">AI Improvement of Cover Letter</a>
+      <a href="send-email-page">Email Stake</a>
+      <a href="job-search">Job Search</a>
+      <a href="custom-cover">Customize Cover Letter</a>
+      <a href="custom-resume">Customize Resume</a>
+      <a href="interview-quest">Preparing for Interview</a>
+      <a href="feed-back">Feedback</a>
+    </div>
+  </div>
+
+<script>
+  function openSameSizePopup() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const left = window.screenX;
+    const top = window.screenY;
+
+    window.open(
+      'static/intro-video.mp4',
+      'videoWindow',
+      `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+    );
+  }
+</script>
+</body>
+</html>

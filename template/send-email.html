@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Email to Stake</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+    h1 { text-align: center; color: #333; }
+    label { font-weight: bold; display: block; margin-bottom: 8px; }
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #45a049; }
+    #status { margin-top: 20px; text-align: center; }
+
+    #emailModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    #emailModalContent {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 5px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+    #emailModalContent input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display: flex; justify-content: flex-end;">
+      <a href="/">[Return]</a>
+    </div>
+    <div style="text-align: left;">
+      <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+        <img src="static/Help-email.png" style="height: 90px; display: block;">
+      </a>
+    </div>
+
+    <h1>Send Email to Stake</h1>
+    <form id="emailForm">
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+
+      <label for="attachments">Attachments:</label>
+      <input type="file" id="attachments" name="attachments" multiple>
+
+      <button type="submit">Send Email</button>
+    </form>
+    <div id="status"></div>
+  </div>
+
+  <!-- Email popup modal -->
+  <div id="emailModal">
+    <div id="emailModalContent">
+      <h2>Please Enter Your Email</h2>
+      <p>This email will be used to send your message.</p>
+      <input type="email" id="userEmailInput" placeholder="your@email.com" />
+      <button onclick="saveEmail()">Save Email</button>
+    </div>
+  </div>
+
+  <script>
+    // Show modal if no email is saved
+    document.addEventListener("DOMContentLoaded", function () {
+      if (!localStorage.getItem("resume_email")) {
+        document.getElementById("emailModal").style.display = "block";
+      }
+    });
+
+    function saveEmail() {
+      const email = document.getElementById("userEmailInput").value;
+      if (email && email.includes("@")) {
+        localStorage.setItem("resume_email", email);
+        document.getElementById("emailModal").style.display = "none";
+        alert("Email saved successfully!");
+      } else {
+        alert("Please enter a valid email address");
+      }
+    }
+
+    document.getElementById("emailForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const message = document.getElementById("message").value;
+      const attachments = document.getElementById("attachments").files;
+      const status = document.getElementById("status");
+
+      const email = localStorage.getItem("resume_email");
+      if (!email || !email.includes("@")) {
+        alert("Please provide a valid email.");
+        return;
+      }
+
+      if (!message.trim()) {
+        status.innerText = "Please enter a message.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('subject', 'Stake Communication');
+      formData.append('message', message);
+      for (let i = 0; i < attachments.length; i++) {
+        formData.append('attachments', attachments[i]);
+      }
+
+      try {
+        status.innerText = "Sending email...";
+        const response = await fetch('/send-email', {
+          method: 'POST',
+          body: formData
+        });
+
+        const text = await response.text();
+        let data;
+
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.error("Raw HTML response:", text);
+          status.innerText = "⚠ Server sent an invalid response:\n" + text.slice(0, 100) + "...";
+          return;
+        }
+
+        if (!response.ok) {
+          status.innerText = data.error || "❌ Server error occurred.";
+        } else {
+          status.innerText = data.message || "✅ Email sent successfully!";
+        }
+
+      } catch (error) {
+        console.error("Fetch error:", error);
+        status.innerText = "Network error: " + error.message;
+      }
+    });
+
+    function openSameSizePopup() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const left = window.screenX;
+      const top = window.screenY;
+      window.open(
+        'email-stake-help',
+        'videoWindow',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+      );
+    }
+  </script>
+</body>
+</html>

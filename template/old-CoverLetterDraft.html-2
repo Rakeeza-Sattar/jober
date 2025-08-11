@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft Cover Letter</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        textarea, input {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+            display: block;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .collapsible {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .active, .collapsible:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .editor-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 150px;
+            background-color: white;
+        }
+        .container {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .example {
+            background-color: #e8f5e8;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+        .template {
+            background-color: #f0f8ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #007BFF;
+        }
+        #emailModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        #emailModalContent {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #emailModalContent input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #emailModalContent button {
+            width: auto;
+            padding: 8px 16px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const collapsibles = document.querySelectorAll(".collapsible");
+            collapsibles.forEach(button => {
+                let content = button.nextElementSibling;
+                if (content) {
+                    content.style.display = "none";
+                }
+            });
+
+            if (!localStorage.getItem("coverletter_email")) {
+                document.getElementById("emailModal").style.display = "block";
+            }
+        });
+    </script>
+
+    <div style="display: flex; justify-content: flex-end;">
+        <a href="/">[Return]</a>
+    </div>
+    <div style="text-align: left;">
+        <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+            <img src="static/Help-CoverLetter.png" style="height: 90px; display: block;">
+        </a>
+    </div>
+
+    <div id="emailModal">
+        <div id="emailModalContent">
+            <h2>Please Enter Your Email</h2>
+            <p>We'll use this email to send your cover letter.</p>
+            <input type="email" id="userEmailInput" placeholder="your@email.com">
+            <button onclick="saveEmail()">Save Email</button>
+        </div>
+    </div>
+
+    <h1>Draft Cover Letter</h1>
+
+    <section>
+        <button class="collapsible">Personal Information</button>
+        <div class="content">
+            <label>Full Name:</label>
+            <input type="text" id="fullName" placeholder="Full Name">
+            <label>Phone Number:</label>
+            <input type="text" id="phone" placeholder="Phone Number">
+            <label>Email Address:</label>
+            <input type="email" id="email" placeholder="Email Address">
+            <label>LinkedIn Profile:</label>
+            <input type="text" id="linkedin" placeholder="LinkedIn Profile">
+            <label>Portfolio/Website:</label>
+            <input type="text" id="portfolio" placeholder="Portfolio/Website">
+            <label>Location (City, State):</label>
+            <input type="text" id="location" placeholder="City, State">
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Company Information</button>
+        <div class="content">
+            <label>Company Name:</label>
+            <input type="text" id="companyName" placeholder="Company Name">
+            <label>Company Address:</label>
+            <input type="text" id="companyAddress" placeholder="Company Address">
+            <label>Location (City, State):</label>
+            <input type="text" id="companyLocation" placeholder="City, State">
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">First Paragraph</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the First Paragraph of a Cover Letter</h3>
+                <p>The first paragraph of your cover letter is crucial because it sets the tone and captures the hiring manager's attention. Here's how to structure it effectively:</p>
+
+                <p><strong>1️⃣ Start with Enthusiasm</strong></p>
+                <p>Show excitement for the role and company.</p>
+                <p>Mention the specific job title you're applying for.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "I am excited to apply for the [Job Title] position at [Company Name], as advertised on [Job Board/Company Website]. With my background in [Your Industry/Field], I am eager to contribute to your team's success."
+                </div>
+
+                <p><strong>2️⃣ Highlight Your Value Proposition</strong></p>
+                <p>Briefly state why you are a strong candidate.</p>
+                <p>Mention a key strength or accomplishment that makes you a good fit.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "With [X years] of experience in [your field], I have developed a strong skill set in [mention key skills]. My recent work at [Previous Company] led to [mention an achievement], which aligns well with your company's goals."
+                </div>
+
+                <p><strong>3️⃣ Show Knowledge of the Company</strong></p>
+                <p>Demonstrate that you've researched the company.</p>
+                <p>Mention something specific about their mission, projects, or culture.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "I am particularly drawn to [Company Name] because of its commitment to [specific company value, initiative, or project]. Your recent [mention a company achievement] resonated with me, and I am eager to bring my skills to your team."
+                </div>
+
+                <p><strong>🚀 Strong First Paragraph Template</strong></p>
+                <div class="template">
+                    "Dear [Hiring Manager's Name],<br>
+                    I am excited to apply for the [Job Title] position at [Company Name]. With [X years] of experience in [Your Industry], I have honed my skills in [mention key skills or achievements]. I am particularly drawn to [Company Name] because of its commitment to [specific company value or initiative], and I am eager to contribute to your team."
+                </div>
+
+                <div id="summaryTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Middle Paragraphs</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the Middle Paragraphs of a Cover Letter</h3>
+                <p>The middle paragraphs of your cover letter are where you provide proof of your skills, highlight your achievements, and connect your experience to the company's needs. Here's how to structure them effectively:</p>
+
+                <p><strong>1️⃣ Showcase Your Relevant Skills & Experience</strong></p>
+                <p>Focus on 2-3 key skills or accomplishments that make you a strong fit.</p>
+                <p>Use specific examples to demonstrate your impact in previous roles.</p>
+                <p>Show how your experience aligns with the job requirements.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "At [Previous Company], I led a team of [X] members and implemented [specific project or initiative], which resulted in [achievement, such as cost savings, efficiency improvements, increased revenue, etc.]. I take pride in my ability to [key skill related to the job]."
+                </div>
+
+                <p><strong>2️⃣ Quantify Your Achievements (If Possible)</strong></p>
+                <p>Use numbers, percentages, or measurable results to make your accomplishments more impactful.</p>
+                <p>Employers love to see data-backed success rather than vague statements.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "In my last role as [Job Title] at [Company], I optimized [a process or system], reducing [specific inefficiency] by <strong>30%</strong> and increasing productivity by <strong>20%</strong>. My ability to analyze data and implement strategic improvements makes me confident in my ability to contribute to [Company Name]."
+                </div>
+
+                <p><strong>3️⃣ Show How You Can Solve Their Problems</strong></p>
+                <p>Research the company's challenges, goals, or recent projects.</p>
+                <p>Explain how your skills & experience will help them succeed.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "I understand that [Company Name] is expanding its [specific department or initiative]. With my expertise in [relevant skill], I am eager to contribute to your efforts by [how you can help solve their challenge or support their mission]."
+                </div>
+
+                <p><strong>4️⃣ Demonstrate Your Fit for the Company Culture</strong></p>
+                <p>Highlight any shared values or alignment with the company's mission.</p>
+                <p>Mention a recent company achievement, project, or initiative you admire.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "What excites me most about [Company Name] is your commitment to [specific value, such as innovation, sustainability, customer success, etc.]. At [Previous Company], I thrived in a similar culture, where [describe how you align with their values]."
+                </div>
+
+                <p><strong>🚀 Middle Paragraphs Template</strong></p>
+                <div class="template">
+                    "In my role as [Job Title] at [Previous Company], I successfully [describe an achievement], leading to [quantifiable impact, such as percentage growth, revenue increase, cost reduction]. My experience in [relevant skill] has allowed me to [explain how it relates to the new job].<br><br>
+                    Additionally, I understand that [Company Name] is focusing on [mention a company goal or challenge]. With my expertise in [relevant skill or experience], I am eager to contribute by [explain how you can add value]."
+                </div>
+                <div id="skillsTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Ending Paragraph</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the Ending Paragraph of a Cover Letter</h3>
+                <p>The closing paragraph of your cover letter is your final chance to leave a strong impression. It should be confident, action-oriented, and appreciative while reinforcing your enthusiasm for the role. Here's how to craft it effectively:</p>
+
+                <p><strong>1️⃣ Express Enthusiasm & Confidence</strong></p>
+                <p>Reaffirm your interest in the position.</p>
+                <p>Highlight your confidence in contributing value to the company.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "I am eager for the opportunity to bring my skills in [specific skill] to [Company Name] and contribute to your team's success. I am confident that my experience aligns well with your needs."
+                </div>
+
+                <p><strong>2️⃣ Include a Call to Action (Encourage Next Steps)</strong></p>
+                <p>Express interest in discussing your application further.</p>
+                <p>Politely request an interview or meeting.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "I welcome the opportunity to further discuss how my experience can benefit [Company Name]. I would be happy to meet at your convenience to explore how I can contribute to your team."
+                </div>
+
+                <p><strong>3️⃣ Show Appreciation</strong></p>
+                <p>Thank the hiring manager for their time and consideration.</p>
+                <p>Keep it concise and professional.</p>
+                <div class="example">
+                    ✅ Example:<br>
+                    "Thank you for your time and consideration. I look forward to the possibility of contributing to your team and hope to hear from you soon."
+                </div>
+
+                <p><strong>🚀 Strong Closing Paragraph Template</strong></p>
+                <div class="template">
+                    "I am excited about the opportunity to contribute my expertise in [key skill] to [Company Name]. I welcome the chance to discuss how my experience aligns with your needs and would love the opportunity for an interview at your convenience. Thank you for your time and consideration—I look forward to hearing from you soon."
+                </div>
+                <div id="workTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Sign off</button>
+        <div class="content">
+            <h3>Sign Off</h3>
+            <p>Enter sign off here saying "Warm regards," next line [Your Name] in text box or something similar.</p>
+            <div id="refTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <button onclick="downloadRTFfile()">Download as RTF</button>
+    <button onclick="handleEmail()">Email Myself</button>
+
+    <script>
+        document.querySelectorAll(".collapsible").forEach(button => {
+            button.addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                content.style.display = content.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        function saveEmail() {
+            const email = document.getElementById("userEmailInput").value;
+            if (email && email.includes("@")) {
+                localStorage.setItem("coverletter_email", email);
+                document.getElementById("emailModal").style.display = "none";
+                alert("Email saved successfully!");
+            } else {
+                alert("Please enter a valid email address");
+            }
+        }
+
+        // Initialize Quill Editors
+        var quillSummary = new Quill('#summaryTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your opening paragraph here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+        var quillSkills = new Quill('#skillsTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your middle paragraphs here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+        var quillWork = new Quill('#workTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your closing paragraph here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+        var quillRef = new Quill('#refTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your sign-off here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+        // Function to Extract Formatted Content
+        function getFormattedContent() {
+            return quillSummary.root.innerHTML;
+        }
+        function getFormattedContent1() {
+            return quillSkills.root.innerHTML;
+        }
+        function getFormattedContent2() {
+            return quillWork.root.innerHTML;
+        }
+        function getFormattedContent11() {
+            return quillRef.root.innerHTML;
+        }
+
+        function collectAllContent() {
+            let content = "";
+
+            // Personal Information
+            const personalFields = [
+                { id: "fullName", label: "" },
+                { id: "location", label: "" },
+                { id: "phone", label: "Phone: " },
+                { id: "email", label: "Email: " },
+                { id: "linkedin", label: "LinkedIn: " },
+                { id: "portfolio", label: "Portfolio: " }
+            ];
+
+            personalFields.forEach(field => {
+                const value = document.getElementById(field.id)?.value.trim();
+                if (value) {
+                    content += field.label + value + "\n";
+                }
+            });
+
+            // Company Information
+            const companyFields = [
+                { id: "companyName", label: "" },
+                { id: "companyAddress", label: "" },
+                { id: "companyLocation", label: "" }
+            ];
+
+            let hasCompany = false;
+            companyFields.forEach(field => {
+                const value = document.getElementById(field.id)?.value.trim();
+                if (value) {
+                    hasCompany = true;
+                    content += value + "\n";
+                }
+            });
+            if (hasCompany) content += "\n";
+
+            // Rich Text Editor Content
+            const editors = [
+                { editor: quillSummary, title: "OPENING PARAGRAPH" },
+                { editor: quillSkills, title: "MIDDLE PARAGRAPHS" },
+                { editor: quillWork, title: "CLOSING PARAGRAPH" },
+                { editor: quillRef, title: "SIGN OFF" }
+            ];
+
+            editors.forEach(item => {
+                const html = item.editor.root.innerHTML;
+                if (html && html !== "<p><br></p>") {
+                    const text = item.editor.getText().trim();
+                    if (text) {
+                        content += `\n${item.title}:\n${text}\n`;
+                    }
+                }
+            });
+
+            return content;
+        }
+
+        function downloadRTFfile() {
+            let content = "";
+
+
+            // RTF utility to escape text
+            function escapeRtf(text) {
+                return text.replace(/\\/g, '\\\\')
+                           .replace(/{/g, '\\{')
+                           .replace(/}/g, '\\}')
+                           .replace(/\n/g, '\\line ')
+                           .replace(/<br>/gi, '\\line ')
+                           .replace(/<\/?[^>]+(>|$)/g, "");
+            }
+
+            // Personal Info
+            let personalInfo = [
+                { id: "fullName", label: "" },
+                { id: "location", label: "" },
+                { id: "phone", label: "Phone Number: " },
+                { id: "email", label: "Email Address: " },
+                { id: "linkedin", label: "LinkedIn Profile: " },
+                { id: "portfolio", label: "Portfolio/Website: " }
+            ];
+
+            let hasPersonalInfo = false;
+            personalInfo.forEach(field => {
+                let inputElement = document.getElementById(field.id);
+                if (inputElement && inputElement.value.trim() !== "") {
+                    hasPersonalInfo = true;
+                    content += `${escapeRtf(field.label + inputElement.value)}\\line `;
+                }
+            });
+            if (hasPersonalInfo) content += `\\line `;
+
+            // Company Info
+            let companyInfo = [
+                { id: "companyName", label: "" },
+                { id: "companyAddress", label: "" },
+                { id: "companyLocation", label: "" }
+            ];
+
+            let hasCompanyInfo = false;
+            companyInfo.forEach(field => {
+                let inputElement = document.getElementById(field.id);
+                if (inputElement && inputElement.value.trim() !== "") {
+                    hasCompanyInfo = true;
+                    content += `${escapeRtf(field.label + inputElement.value)}\\line `;
+                }
+            });
+            if (hasCompanyInfo) content += `\\line `;
+
+            // Main content sections
+            function appendSection(getContentFn) {
+                let html = getContentFn();
+                if (html && html.trim() !== "<p><br></p>") {
+                    content += escapeRtf(html) + "\\line ";
+                }
+            }
+
+            appendSection(getFormattedContent);   // Summary
+            appendSection(getFormattedContent1);  // Skills
+            appendSection(getFormattedContent2);  // Work
+            appendSection(getFormattedContent11); // Reference
+
+            // Final RTF content with header
+            let rtfContent = `{\\rtf1\\ansi\\deff0\n${content}}`;
+
+            let blob = new Blob([rtfContent], { type: "application/rtf" });
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "cover_letter.rtf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function handleEmail() {
+            let storedEmail = localStorage.getItem("coverletter_email");
+            if (!storedEmail) {
+                storedEmail = prompt("Please enter your email address:");
+                if (!storedEmail || !storedEmail.includes("@")) {
+                    alert("Invalid email. Please try again.");
+                    return;
+                }
+                localStorage.setItem("coverletter_email", storedEmail);
+            }
+
+            let content = collectAllContent();
+
+            if (!content || content.trim().length === 0) {
+                alert('Please fill in some cover letter information before sending.');
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append('email', storedEmail);
+            formData.append('subject', 'Your Cover Letter');
+            formData.append('message', content);
+
+            fetch('/send-resume-email', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success || data.message) {
+                    alert('Cover letter sent successfully to ' + storedEmail);
+                } else {
+                    alert('Failed to send email: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Network error sending email');
+            });
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function openSameSizePopup() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const left = window.screenX;
+            const top = window.screenY;
+
+            window.open(
+                'cover-letter-help',
+                'videoWindow',
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+            );
+        }
+    </script>
+</body>
+</html>

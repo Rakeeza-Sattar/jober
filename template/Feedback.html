@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Page Feedback Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div style="display: flex; justify-content: flex-end;">
+       	<a href="/">[Return]</a>
+    </div>
+    <div style="text-align: left;">
+        <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+            <img src="static/Help-Feedback.png" style="height: 90px; display: block;">
+        </a>
+    </div>
+        <h1>Send Feedback</h1>
+        <form id="emailForm">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+
+            <button type="submit">Send Email</button>
+        </form>
+        <div id="status"></div>
+    </div>
+    <div class="container">
+        <span>--- Helpful Links ---</span>
+
+        <ul style="list-style-position: inside; padding-left: 0;">
+            <li style="text-align: left;">
+                <a href="#" onclick="openSameSizePopup2()">Ward Council or Fifth Sunday Discussion</a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/study/books-and-lessons/self-reliance-resources?lang=eng">Self-Reliance Resources</a>
+            </li>
+        </ul>
+
+
+        <span>--- Employment Services - Church of Jesus Christ of Latter-day Saints ---</span>
+        <br><span>--- Free to Everyone ---</span>
+
+        <ul style="list-style-position: inside; padding-left: 0;">
+            <li style="text-align: left;">
+                <a href="#" onclick="openSameSizePopup3()">Employment Services Overview</a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/life/written-materials?lang=eng">Resume Help</a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/life/job-interviews?lang=eng">Job Interview Help/a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/life/accelerated-job-search?lang=eng">Jion a Job Search Group/a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://employmentservices.churchofjesuschrist.org/jobSeekers">Get personalized Help/a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/life/ask-an-expert-forum?lang=eng">Ask an expert/a>
+            </li>
+            <li style="text-align: left;">
+                <a href="https://www.churchofjesuschrist.org/life/online-employment-workshops?lang=eng">Attend a Online Wrokshop/a>
+            </li>
+
+        </ul>
+
+
+
+
+    </div>
+</body>
+</html>
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const message = document.getElementById('message').value;
+            const status = document.getElementById('status');
+
+            if (!message.trim()) {
+                status.innerText = "Please enter a message.";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('message', message);
+
+            try {
+                status.innerText = "Sending email...";
+                const response = await fetch('/email-feed-back', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const text = await response.text(); // Raw response for debugging
+                console.log("Raw response:", text); // Log to console
+                const data = JSON.parse(text); // Parse JSON
+
+                if (!response.ok) {
+                    throw new Error(`${response.status}: ${data.error || 'Unknown server error'}`);
+                }
+
+                status.innerText = data.message || "Email sent successfully!";
+            } catch (error) {
+                status.innerText = `Error sending email: ${error.message}`;
+                console.error("Fetch error:", error); // Log full error
+            }
+
+        });
+
+        function openSameSizePopup() {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          const left = window.screenX;
+          const top = window.screenY;
+
+          window.open(
+            'static/intro-video.mp4',
+            'videoWindow',
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+          );
+        }
+        function openSameSizePopup2() {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          const left = window.screenX;
+          const top = window.screenY;
+
+          window.open(
+            'static/video/WardCouncil.mp4?v=2',
+            'videoWindow',
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+          );
+        }
+        function openSameSizePopup3() {
+          const width = window.innerWidth;
+          const height = window.innerHeight;
+          const left = window.screenX;
+          const top = window.screenY;
+
+          window.open(
+            'static/video/EmploymentServices.mp4?v=2',
+            'videoWindow',
+            `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+          );
+        }
+
+    </script>

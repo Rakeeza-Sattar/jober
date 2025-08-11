@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft Resume</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        textarea, input {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+            display: block;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .collapsible {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .active, .collapsible:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .editor-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 150px;
+            background-color: white;
+        }
+        #emailModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        #emailModalContent {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div style="display: flex; justify-content: flex-end;">
+    <a href="/">[Return]</a>
+</div>
+<div>
+    <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+       <img src="static/Help-Resume.png" style="height: 120px; vertical-align: middle; 60px;">
+    </a>
+</div>
+
+<div id="emailModal">
+    <div id="emailModalContent">
+        <h2>Please Enter Your Email</h2>
+        <p>We'll use this email to send your resume.</p>
+        <input type="email" id="userEmailInput" placeholder="your@email.com" style="width: 100%; padding: 8px; margin: 10px 0;">
+        <button onclick="saveEmail()">Save Email</button>
+    </div>
+</div>
+
+    <h1>Complete a Resume</h1>
+
+    <section>
+        <button class="collapsible">Personal Information</button>
+        <div class="content">
+            <label>Full Name:</label>
+            <input type="text" id="fullName" placeholder="Full Name">
+            <label>City, State</label>
+            <input type="text" id="location" placeholder="City, State">
+            <label>Phone Number:</label>
+            <input type="text" id="phone" placeholder="Phone Number">
+            <label>Email Address:</label>
+            <input type="email" id="email" placeholder="Email Address">
+            <label>LinkedIn Profile:</label>
+            <input type="text" id="linkedin" placeholder="LinkedIn Profile">
+            <label>Portfolio/Website:</label>
+            <input type="text" id="portfolio" placeholder="Portfolio/Website">
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Objective</button>
+        <div class="content">
+            <p>The <strong>professional summary</strong> on a resume serves as a concise yet impactful introduction that highlights your key qualifications, experience, and career goals.</p>
+        <ul>
+            <li><strong>Grabs Attention Quickly</strong> – Hiring managers often scan resumes in a few seconds. A strong summary helps them immediately see your value.</li>
+            <li><strong>Showcases Key Strengths</strong> – It highlights your most relevant skills, experience, and accomplishments that align with the job.</li>
+            <li><strong>Provides a Career Overview</strong> – It summarizes your background, giving context to your work history and expertise.</li>
+            <li><strong>Differentiates You from Others</strong> – A well-written summary can set you apart by emphasizing unique qualifications or achievements.</li>
+            <li><strong>Optimized for ATS (Applicant Tracking Systems)</strong> – Including key industry terms and skills increases the chances of your resume passing ATS filters.</li>
+        </ul>
+
+        <h3>What to Include in a Strong Professional Summary</h3>
+        <p>A strong professional summary typically includes:</p>
+        <ul>
+            <li><strong>Years of experience</strong> in your field</li>
+            <li><strong>Core competencies</strong> (e.g., project management, customer service, technical skills)</li>
+            <li><strong>Notable achievements</strong> (e.g., increased revenue by 20%, managed a team of 15)</li>
+            <li><strong>Career goals</strong> relevant to the job you're applying for</li>
+        </ul>
+            <div id="summaryTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Key Skills</button>
+        <div class="content">
+            <p>Key skills highlight your abilities that are most relevant to the job you're applying for.</p>
+        <ul>
+            <li>List 5-10 relevant skills specific to the job you’re applying for.</li>
+            <li>Include a mix of hard skills (technical abilities, software proficiency) and soft skills (communication, leadership).</li>
+            <li>Use bullet points or a comma-separated format.</li>
+        </ul>
+            <div id="skillsTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Work Experience</button>
+        <div class="content">
+        <h3>Purpose of Work Experience</h3>
+        <p>The work experience section is one of the most important parts of your resume. It provides employers with a clear view of your previous job roles, responsibilities, and accomplishments, helping them determine your suitability for the job. This section allows you to showcase how your past experiences have equipped you with the skills necessary for the position you are applying for.</p>
+        <ul>
+            <li>List your previous jobs in reverse chronological order, starting with the most recent.</li>
+            <li>Include job title, company name, location, and dates of employment.</li>
+            <li>Highlight key responsibilities and achievements in each role.</li>
+            <li>Use action verbs to describe your contributions and impact.</li>
+        </ul>            <div id="workTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Education</button><div class="content">
+       <h3>Purpose of Education</h3>
+        <p>The education section demonstrates your academic background and qualifications. It shows employers your level of expertise, relevant coursework, and certifications that support your application.</p>
+        <ul>
+            <li>List degrees in reverse chronological order.</li>
+            <li>Include the name of the institution, degree obtained, and graduation year.</li>
+            <li>Mention relevant coursework, honors, or extracurricular activities if applicable.</li>
+        </ul>
+        <div id="educationTextEditor" class="editor-container"></div>
+    </div>
+
+    </section>
+
+    <section>
+        <button class="collapsible">Certifications</button>
+        <div class="content">
+            <h3>Purpose of Certifications</h3>
+            <p>Certifications validate your expertise and skills in a particular field. They enhance your credibility and competitiveness in the job market.</p>
+            <ul>
+                <li>List relevant certifications or licenses (e.g., PMP, CPA, Google Analytics Certified).</li>
+                <li>Include the issuing organization and date earned.</li>
+            </ul>
+            <div id="certTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Projects</button>
+        <div class="content">
+        <h3>Purpose of Certifications</h3>
+        <p>Certifications validate your expertise and skills in a particular field. They enhance your credibility and competitiveness in the job market.</p>
+        <ul>
+            <li>List relevant certifications or licenses (e.g., PMP, CPA, Google Analytics Certified).</li>
+            <li>Include the issuing organization and date earned.</li>
+        </ul>
+            <div id="projectTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Volunteer Experience</button>
+        <div class="content">
+        <h3>Purpose of Volunteer Experience</h3>
+        <p>Volunteer experience demonstrates your community involvement, leadership, and skills outside of paid work. It is valuable for showcasing character and additional competencies.</p>
+        <ul>
+            <li>Role Title</li>
+            <li>Organization Name, Location</li>
+            <li>Dates of Service (Month/Year format)</li>
+        </ul>
+            <div id="volTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Awards and Honors</button>
+        <div class="content">
+         <h3>Purpose of Volunteer Experience</h3>
+        <h3>Purpose of Awards and Honors</h3>
+        <p>Awards and honors highlight your accomplishments and recognitions, showcasing excellence in academics, work, or extracurricular activities.</p>
+        <ul>
+            <li>List any notable awards, scholarships, or recognitions.</li>
+            <li>Include the issuing organization and date received.</li>
+        </ul>
+            <div id="awardTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Technical Skills</button>
+        <div class="content">
+        <h3>Purpose of Technical Skills</h3>
+        <p>Technical skills showcase your proficiency in specific tools, technologies, and methodologies required for the job.</p>
+        <ul>
+            <li>Highlight technical proficiencies (e.g., software, programming languages, tools).</li>
+            <li>Useful for roles in tech, design, or engineering.</li>
+        </ul>
+            <div id="techTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Languages</button>
+        <div class="content">
+        <h3>Purpose of Languages</h3>
+        <p>Language skills demonstrate your ability to communicate in multiple languages, which is valuable for roles requiring bilingual or multilingual proficiency.</p>
+        <ul>
+            <li>List any languages you speak and your proficiency level (e.g., fluent, intermediate, basic).</li>
+        </ul>
+            <div id="langTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Professional Affiliations</button>
+        <div class="content">
+        <h3>Purpose of Professional Affiliations</h3>
+        <p>Professional affiliations showcase your involvement in industry-related organizations, demonstrating your commitment to professional growth and networking.</p>
+        <ul>
+            <li>List industry organizations you’re a member of (e.g., SHRM, AMA).</li>
+            <li>Include any leadership roles held.</li>
+        </ul>
+            <div id="profTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">References</button>
+        <div class="content">
+        <h3>References</h3>
+        <p>Enter comment here saying "Available upon request" in text box or Enter references in text box below.</p>
+        <div id="refTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <button onclick="downloadRTFfile()">Download as RTF</button>
+    <button onclick="handleEmail()">Email Myself</button>
+
+<script>
+var quillSummary = new Quill('#summaryTextEditor', { theme: 'snow' });
+var quillSkills = new Quill('#skillsTextEditor', { theme: 'snow' });
+var quillWork = new Quill('#workTextEditor', { theme: 'snow' });
+var quillEducation = new Quill('#educationTextEditor', { theme: 'snow' });
+var quillCert = new Quill('#certTextEditor', { theme: 'snow' });
+var quillProject = new Quill('#projectTextEditor', { theme: 'snow' });
+var quillVol = new Quill('#volTextEditor', { theme: 'snow' });
+var quillAward = new Quill('#awardTextEditor', { theme: 'snow' });
+var quillTech = new Quill('#techTextEditor', { theme: 'snow' });
+var quillLang = new Quill('#langTextEditor', { theme: 'snow' });
+var quillProf = new Quill('#profTextEditor', { theme: 'snow' });
+var quillRef = new Quill('#refTextEditor', { theme: 'snow' });
+
+document.querySelectorAll(".collapsible").forEach(button => {
+    button.addEventListener("click", function() {
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (!localStorage.getItem("resume_email")) {
+        document.getElementById("emailModal").style.display = "block";
+    }
+});
+
+function saveEmail() {
+    const email = document.getElementById("userEmailInput").value;
+    if (email && email.includes("@")) {
+        localStorage.setItem("resume_email", email);
+        document.getElementById("emailModal").style.display = "none";
+    } else {
+        alert("Please enter a valid email address");
+    }
+}
+
+function downloadRTFfile() {
+    let content = collectAllContent();
+    let rtfContent = convertHtmlToRtf(content);
+
+    let blob = new Blob([rtfContent], { type: "text/rtf" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "resume.rtf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function handleEmail() {
+    let storedEmail = localStorage.getItem("resume_email");
+    if (!storedEmail) {
+        storedEmail = prompt("Please enter your email address:");
+        if (!storedEmail || !storedEmail.includes("@")) {
+            alert("Invalid email. Please try again.");
+            return;
+        }
+        localStorage.setItem("resume_email", storedEmail);
+    }
+
+    let content = collectAllContent();
+
+    let formData = new FormData();
+    formData.append('email', storedEmail);
+    formData.append('subject', 'Your Resume');
+    formData.append('message', content);
+
+   fetch('/send-resume-email', {
+    method: 'POST',
+    body: formData
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success || data.message) {
+        alert('Resume sent successfully to ' + storedEmail);
+    } else {
+        alert('Failed to send email: ' + (data.error || 'Unknown error'));
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert('Network error sending email');
+});
+}
+
+function collectAllContent() {
+    let content = "";
+
+    const personalFields = [
+        { id: "fullName", label: "Name: " },
+        { id: "location", label: "Location: " },
+        { id: "phone", label: "Phone: " },
+        { id: "email", label: "Email: " },
+        { id: "linkedin", label: "LinkedIn: " },
+        { id: "portfolio", label: "Portfolio: " }
+    ];
+
+    personalFields.forEach(field => {
+        const value = document.getElementById(field.id)?.value.trim();
+        if (value) {
+            content += field.label + value + "\n";
+        }
+    });
+
+    const editors = [
+        { editor: quillSummary, title: "OBJECTIVE" },
+        { editor: quillSkills, title: "SKILLS" },
+        { editor: quillWork, title: "WORK EXPERIENCE" },
+        { editor: quillEducation, title: "EDUCATION" },
+        { editor: quillCert, title: "CERTIFICATIONS" },
+        { editor: quillProject, title: "PROJECTS" },
+        { editor: quillVol, title: "VOLUNTEER EXPERIENCE" },
+        { editor: quillAward, title: "AWARDS AND HONORS" },
+        { editor: quillTech, title: "TECHNICAL SKILLS" },
+        { editor: quillLang, title: "LANGUAGES" },
+        { editor: quillProf, title: "PROFESSIONAL AFFILIATIONS" },
+        { editor: quillRef, title: "REFERENCES" }
+    ];
+
+    editors.forEach(item => {
+        const html = item.editor.root.innerHTML;
+        if (html !== "<p><br></p>") {
+            const text = item.editor.getText().trim();
+            if (text) {
+                content += `\n${item.title}:\n${text}\n`;
+            }
+        }
+    });
+
+    return content;
+}
+
+function convertHtmlToRtf(html) {
+    if (!(typeof html === "string" && html)) {
+        return null;
+    }
+
+    let rtf = "{\\rtf1\\ansi\\deff0\n";
+    rtf += html.replace(/\n/g, "\\par\n");
+    rtf += "}";
+
+    return rtf;
+}
+
+function openSameSizePopup() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const left = window.screenX;
+    const top = window.screenY;
+
+    window.open(
+        'resume-draft-help',
+        'videoWindow',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+    );
+}
+</script>
+</body>
+</html>

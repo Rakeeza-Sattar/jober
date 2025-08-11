@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft Cover Letter - PWA</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#007BFF">
+    <meta name="description" content="Create professional cover letters easily with our PWA app">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Cover Letter Creator">
+
+    <!-- Inline manifest (base64) - OK for single-file demo, but for production move to manifest.json -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkNvdmVyIExldHRlciBDcmVhdG9yIiwKICAic2hvcnRfbmFtZSI6ICJDb3ZlckxldHRlciIsCiAgInN0YXJ0X3VybCI6ICIvIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjhmOWZhIiwKICAidGhlbWVfY29sb3IiOiAiIzAwN0JGRiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjNhV1IwYUQwaU1USTRJaUJvWldsbmFIUTlJakV5T0NJZ2RtbGxkMEp2ZUQwaU1DQXdJREV5T0NCTTRUVW5JR1pwYkd3OUlpTXdNRGRDUmtZaVBpQWdJQ0E4Y21WamRDQjNhV1IwYUQwaU1USTRJaUJvWldsbmFIUTlJakV5T0NJZ1ptbHNiRDBpSXpBd04wSkdSaUl2UGlBZ0lDQThkR1Y0ZENITGFXNW5MVlowWVhoMExXRnVZMmh2Y2kwdGJXbGtaR3hsSnlCbWFXeHNQU0ozYUdsMFpTY2dabTl1ZEMxemFYcGxQU0l6TVVCNElpQjRQU0kyTkNJZ2VUMGlOalFpUGtNdmRHVjRkRDRnSUNBOEwzTjJaejRnSUEiLAogICAgICAic2l6ZXMiOiAiMTI4eDEyOCIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXSwKICAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiCn0=">
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 { text-align: center; color: #007BFF; }
+        textarea, input { width: 100%; height: 30px; margin-bottom: 10px; display: block; padding: 5px; border: 1px solid #ccc; border-radius: 5px; }
+        button { display: block; margin: 20px auto; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        .collapsible { background-color: #007BFF; color: white; cursor: pointer; padding: 10px; width: 100%; text-align: left; border: none; outline: none; font-size: 18px; border-radius: 5px; margin-bottom: 5px; }
+        .active, .collapsible:hover { background-color: #0056b3; }
+        .content { display: none; padding: 10px; background-color: white; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
+        .editor-container { border: 1px solid #ccc; padding: 10px; min-height: 150px; background-color: white; }
+        .container { background: white; padding: 15px; margin: 10px 0; border-radius: 5px; border: 1px solid #ddd; }
+        .example { background-color: #e8f5e8; padding: 10px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #28a745; }
+        .template { background-color: #f0f8ff; padding: 10px; margin: 10px 0; border-radius: 5px; border-left: 4px solid #007BFF; }
+        #emailModal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        #emailModalContent { background-color: white; margin: 15% auto; padding: 20px; border-radius: 5px; width: 80%; max-width: 400px; text-align: center; }
+        #emailModalContent input { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        #emailModalContent button { width: auto; padding: 8px 16px; margin: 5px; }
+        .install-banner { background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 15px; text-align: center; display: none; align-items: center; justify-content: space-between; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3); }
+        .install-btn { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); color: white; padding: 12px 24px; border-radius: 25px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; font-size: 14px; }
+        .install-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,255,255,0.2); }
+        .offline-indicator { background: linear-gradient(135deg, #ffc107, #fd7e14); color: #856404; padding: 12px; text-align: center; display: none; margin-bottom: 20px; border-radius: 8px; font-weight: 500; }
+        @media (max-width: 768px) { .install-banner { flex-direction: column; gap: 10px; } .install-btn { width: 100%; text-align: center; } }
+    </style>
+</head>
+<body>
+    <div class="offline-indicator" id="offlineIndicator">📱 You're offline - Your data is saved locally and will sync when online</div>
+    <div class="install-banner" id="installBanner"><span>📱 Install this app on your device for a better experience and offline access!</span><button class="install-btn" id="installButton">📲 Install App</button></div>
+
+    <div style="display: flex; justify-content: flex-end;"><a href="/">[Return]</a></div>
+    <div style="text-align: left;"><a href="#" onclick="openSameSizePopup()" title="Watch Help Video"><img src="static/Help-CoverLetter.png" style="height: 90px; display: block;" onerror="this.style.display='none'"></a></div>
+
+    <div id="emailModal"><div id="emailModalContent"><h2>Please Enter Your Email</h2><p>We'll use this email to send your cover letter.</p><input type="email" id="userEmailInput" placeholder="your@email.com"><button onclick="saveEmail()">Save Email</button></div></div>
+
+    <h1>Draft Cover Letter</h1>
+
+    <section>
+        <button class="collapsible">Personal Information</button>
+        <div class="content">
+            <label>Full Name:</label>
+            <input type="text" id="fullName" placeholder="Full Name">
+            <label>Phone Number:</label>
+            <input type="text" id="phone" placeholder="Phone Number">
+            <label>Email Address:</label>
+            <input type="email" id="email" placeholder="Email Address">
+            <label>LinkedIn Profile:</label>
+            <input type="text" id="linkedin" placeholder="LinkedIn Profile">
+            <label>Portfolio/Website:</label>
+            <input type="text" id="portfolio" placeholder="Portfolio/Website">
+            <label>Location (City, State):</label>
+            <input type="text" id="location" placeholder="City, State">
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Company Information</button>
+        <div class="content">
+            <label>Company Name:</label>
+            <input type="text" id="companyName" placeholder="Company Name">
+            <label>Company Address:</label>
+            <input type="text" id="companyAddress" placeholder="Company Address">
+            <label>Location (City, State):</label>
+            <input type="text" id="companyLocation" placeholder="City, State">
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">First Paragraph</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the First Paragraph of a Cover Letter</h3>
+                <div id="summaryTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Middle Paragraphs</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the Middle Paragraphs of a Cover Letter</h3>
+                <div id="skillsTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Ending Paragraph</button>
+        <div class="content">
+            <div class="container">
+                <h3>Guidelines for the Ending Paragraph of a Cover Letter</h3>
+                <div id="workTextEditor" class="editor-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <button class="collapsible">Sign off</button>
+        <div class="content">
+            <h3>Sign Off</h3>
+            <div id="refTextEditor" class="editor-container"></div>
+        </div>
+    </section>
+
+    <button onclick="downloadRTFfile()">Download as RTF</button>
+    <button onclick="handleEmail()">Email Myself</button>
+
+    <script>
+        // ---- Utilities ----
+        function normalizeTextForRtf(str) {
+             if (!str) return '';
+
+    // First replace smart quotes and other special characters
+    const smartChars = {
+        '\u2018': "'", '\u2019': "'", '\u201C': '"', '\u201D': '"',
+        '\u2013': '-', '\u2014': '-', '\u2026': '...', '\u00A0': ' ',
+        '–': '-', '—': '-', '“': '"', '”': '"', '’': "'", '‘': "'", '…': '...'
+    };
+
+    let result = str.replace(/[‘’“”–—…\u00A0]/g, ch => smartChars[ch] || '');
+
+    // Then ensure all remaining non-ASCII characters are properly escaped
+    return result.replace(/[^\x00-\x7F]/g, function(ch) {
+        // Convert character to its Unicode code point
+        const code = ch.charCodeAt(0).toString(16).toUpperCase();
+        // RTF Unicode escape format: \\uN? where N is the Unicode code point
+        return '\\u' + code + '?';
+    });
+}
+
+       function escapeRtf(text) {
+    return text
+        .replace(/\\/g, '\\\\')
+        .replace(/{/g, '\\{')
+        .replace(/}/g, '\\}')
+        .replace(/\n/g, '\\line\n')
+        .replace(/\r/g, '');
+}
+
+        // ---- Collapsible behaviour ----
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.collapsible').forEach(button => {
+                const content = button.nextElementSibling;
+                if (content) content.style.display = 'none';
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const c = this.nextElementSibling;
+                    c.style.display = (c.style.display === 'block') ? 'none' : 'block';
+                });
+            });
+        });
+
+        // ---- PWA Install banner handling ----
+        let deferredPrompt;
+        const installBanner = document.getElementById('installBanner');
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBanner.style.display = 'flex';
+        });
+
+        installButton && installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const choice = await deferredPrompt.userChoice;
+                console.log('Install choice:', choice);
+                installBanner.style.display = 'none';
+                deferredPrompt = null;
+            }
+        });
+
+        // ---- Offline indicator ----
+        window.addEventListener('online', () => { document.getElementById('offlineIndicator').style.display = 'none'; });
+        window.addEventListener('offline', () => { document.getElementById('offlineIndicator').style.display = 'block'; });
+
+        // ---- Service Worker (inline blob) ----
+        function createServiceWorkerURL() {
+            const swCode =
+                const CACHE_NAME = 'cover-letter-pwa-v1';
+                const urlsToCache = ['/', '/index.html', 'https://cdn.quilljs.com/1.3.6/quill.snow.css', 'https://cdn.quilljs.com/1.3.6/quill.min.js'];
+                self.addEventListener('install', event => {
+                    event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache)));
+                });
+                self.addEventListener('fetch', event => {
+                    event.respondWith(caches.match(event.request).then(response => response || fetch(event.request)));
+                });
+                self.addEventListener('activate', event => {
+                    event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(k => { if (k !== CACHE_NAME) return caches.delete(k); }))));
+                });
+            ;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            return URL.createObjectURL(blob);
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(createServiceWorkerURL())
+                    .then(reg => { console.log('SW registered', reg); setInterval(autoSave, 30000); })
+                    .catch(err => console.warn('SW registration failed', err));
+            });
+        }
+
+        // ---- Auto-save / Load saved data ----
+        function autoSave() {
+            try {
+                const data = {
+                    timestamp: new Date().toISOString(),
+                    personalInfo: {
+                        fullName: document.getElementById('fullName')?.value || '',
+                        phone: document.getElementById('phone')?.value || '',
+                        email: document.getElementById('email')?.value || '',
+                        linkedin: document.getElementById('linkedin')?.value || '',
+                        portfolio: document.getElementById('portfolio')?.value || '',
+                        location: document.getElementById('location')?.value || ''
+                    },
+                    companyInfo: {
+                        companyName: document.getElementById('companyName')?.value || '',
+                        companyAddress: document.getElementById('companyAddress')?.value || '',
+                        companyLocation: document.getElementById('companyLocation')?.value || ''
+                    },
+                    content: {
+                        summary: quillSummary?.root.innerHTML || '',
+                        skills: quillSkills?.root.innerHTML || '',
+                        work: quillWork?.root.innerHTML || '',
+                        ref: quillRef?.root.innerHTML || ''
+                    }
+                };
+                localStorage.setItem('coverLetterData_pwa', JSON.stringify(data));
+                console.log('Data auto-saved');
+            } catch (e) { console.error('Auto-save failed', e); }
+        }
+
+        function loadSavedData() {
+            try {
+                const saved = localStorage.getItem('coverLetterData_pwa');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    if (data.personalInfo) Object.keys(data.personalInfo).forEach(k => { const el = document.getElementById(k); if (el) el.value = data.personalInfo[k]; });
+                    if (data.companyInfo) Object.keys(data.companyInfo).forEach(k => { const el = document.getElementById(k); if (el) el.value = data.companyInfo[k]; });
+                    window.savedContent = data.content || {};
+                }
+            } catch (e) { console.error('Failed to load saved data', e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSavedData);
+        document.addEventListener('input', autoSave);
+        document.addEventListener('change', autoSave);
+
+        // ---- Initialize Quill editors ----
+        var quillSummary = new Quill('#summaryTextEditor', { theme: 'snow', placeholder: 'Write your opening paragraph here...', modules: { toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link']] } });
+        var quillSkills  = new Quill('#skillsTextEditor',  { theme: 'snow', placeholder: 'Write your middle paragraphs here...', modules: { toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link']] } });
+        var quillWork    = new Quill('#workTextEditor',    { theme: 'snow', placeholder: 'Write your closing paragraph here...', modules: { toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link']] } });
+        var quillRef     = new Quill('#refTextEditor',     { theme: 'snow', placeholder: 'Write your sign-off here...', modules: { toolbar: [[{ header: [1, 2, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link']] } });
+
+        // restore editors' content after init
+        setTimeout(() => {
+            if (window.savedContent) {
+                if (window.savedContent.summary) quillSummary.root.innerHTML = window.savedContent.summary;
+                if (window.savedContent.skills)  quillSkills.root.innerHTML  = window.savedContent.skills;
+                if (window.savedContent.work)    quillWork.root.innerHTML    = window.savedContent.work;
+                if (window.savedContent.ref)     quillRef.root.innerHTML     = window.savedContent.ref;
+            }
+        }, 300);
+
+        quillSummary.on('text-change', autoSave);
+        quillSkills.on('text-change', autoSave);
+        quillWork.on('text-change', autoSave);
+        quillRef.on('text-change', autoSave);
+
+        // ---- Collect content ----
+        function collectAllContent() {
+            let content = '';
+            const personalFields = [ { id: 'fullName', label: '' }, { id: 'location', label: '' }, { id: 'phone', label: 'Phone: ' }, { id: 'email', label: 'Email: ' }, { id: 'linkedin', label: 'LinkedIn: ' }, { id: 'portfolio', label: 'Portfolio: ' } ];
+            personalFields.forEach(f => {
+                const v = document.getElementById(f.id)?.value?.trim();
+                if (v) content += (f.label || '') + v + '\n';
+            });
+
+            const companyFields = [ { id: 'companyName', label: '' }, { id: 'companyAddress', label: '' }, { id: 'companyLocation', label: '' } ];
+            let hasCompany = false;
+            companyFields.forEach(f => { const v = document.getElementById(f.id)?.value?.trim(); if (v) { hasCompany = true; content += v + '\n'; } });
+            if (hasCompany) content += '\n';
+
+            const editors = [ { editor: quillSummary, title: 'OPENING PARAGRAPH' }, { editor: quillSkills, title: 'MIDDLE PARAGRAPHS' }, { editor: quillWork, title: 'CLOSING PARAGRAPH' }, { editor: quillRef, title: 'SIGN OFF' } ];
+            editors.forEach(it => {
+                const html = it.editor.root.innerHTML;
+                if (html && html !== '<p><br></p>') {
+                    const text = it.editor.getText().trim();
+                    if (text) content += \n${it.title}:\n${text}\n;
+                }
+            });
+
+            return content;
+        }
+
+        // ---- Download RTF ----
+        function downloadRTFfile() {
+            let content = collectAllContent();
+            if (!content || content.trim().length === 0) { alert('Please fill in some cover letter information before downloading.'); return; }
+
+            // Normalize smart quotes etc to avoid mojibake
+            content = normalizeTextForRtf(content);
+            // Escape for RTF
+            const rtfBody = escapeRtf(content);
+
+            // Build a simple unicode-friendly RTF header (using ansicpg1252). This works well for ASCII and common punctuation.
+            const rtfContent = {\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0 Times New Roman;}}\\f0\\fs24 ${rtfBody}};
+
+            const blob = new Blob([rtfContent], { type: 'application/rtf;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'cover_letter.rtf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            autoSave();
+        }
+
+        // ---- Email handling (simple) ----
+        function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
+        function saveEmail() {
+            const email = document.getElementById('userEmailInput').value;
+            if (email && validateEmail(email)) { localStorage.setItem('coverletter_email', email); document.getElementById('emailModal').style.display = 'none'; alert('Email saved successfully!'); }
+            else alert('Please enter a valid email address');
+        }
+
+        function handleEmail() {
+            let storedEmail = localStorage.getItem('coverletter_email');
+            if (!storedEmail) {
+                storedEmail = prompt('Please enter your email address:');
+                if (!storedEmail || !validateEmail(storedEmail)) { alert('Invalid email. Please try again.'); return; }
+                localStorage.setItem('coverletter_email', storedEmail);
+            }
+
+            let content = collectAllContent();
+            if (!content || content.trim().length === 0) { alert('Please fill in some cover letter information before sending.'); return; }
+
+            if (!navigator.onLine) {
+                const emailRequest = { email: storedEmail, subject: 'Your Cover Letter', message: content, timestamp: new Date().toISOString() };
+                const pending = JSON.parse(localStorage.getItem('pendingEmails') || '[]'); pending.push(emailRequest); localStorage.setItem('pendingEmails', JSON.stringify(pending));
+                alert('You are offline. Email will be sent when you come back online.');
+                return;
+            }
+
+            const formData = new FormData(); formData.append('email', storedEmail); formData.append('subject', 'Your Cover Letter'); formData.append('message', content);
+
+            fetch('/send-resume-email', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => { if (data.success || data.message) alert('Cover letter sent successfully to ' + storedEmail); else alert('Failed to send email: ' + (data.error || 'Unknown error')); })
+            .catch(err => {
+                console.error('Error sending email', err);
+                const emailRequest = { email: storedEmail, subject: 'Your Cover Letter', message: content, timestamp: new Date().toISOString() };
+                const pending = JSON.parse(localStorage.getItem('pendingEmails') || '[]'); pending.push(emailRequest); localStorage.setItem('pendingEmails', JSON.stringify(pending));
+                alert('Network error sending email. Email saved for when you come back online.');
+            });
+        }
+
+        window.addEventListener('online', () => {
+            const pending = JSON.parse(localStorage.getItem('pendingEmails') || '[]');
+            if (pending.length === 0) return;
+            pending.forEach((req, idx) => {
+                const fd = new FormData(); fd.append('email', req.email); fd.append('subject', req.subject); fd.append('message', req.message);
+                fetch('/send-resume-email', { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(d => { console.log('Pending email sent', idx + 1); })
+                .catch(e => console.error('Failed pending email', e));
+            });
+            localStorage.removeItem('pendingEmails');
+            if (pending.length === 1) alert('Your pending cover letter email has been sent!'); else alert(pending.length + ' pending emails have been sent!');
+        });
+
+        // ---- Misc helpers ----
+        function openSameSizePopup() { window.open('cover-letter-help', 'videoWindow', width=${window.innerWidth},height=${window.innerHeight},left=${window.screenX},top=${window.screenY},resizable=yes); }
+
+        function showStorageUsage() { if ('storage' in navigator && 'estimate' in navigator.storage) navigator.storage.estimate().then(est => console.log(Storage used: ${(est.usage/1024/1024).toFixed(2)} MB of ${(est.quota/1024/1024).toFixed(2)} MB)); }
+        setTimeout(showStorageUsage, 2000);
+
+        console.log('Cover Letter PWA initialized successfully!');
+    </script>
+</body>
+</html>

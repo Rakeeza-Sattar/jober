@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft Cover Letter</title>
+
+    <!--
+
+    <script src="/js/quill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="/static/quill.snow.css" rel="stylesheet">
+    <script src="/js/quill.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="/home/ocottrell/unemployment/static/css/quill.snow.css" rel="stylesheet">
+    <script src="/home/ocottrell/unemployment/static/js/quill.min.js"></script>
+    <link href="quill.snow.css" rel="stylesheet">
+    <script src="quill.min.js"></script>
+
+    -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        textarea, input {
+            width: 100%;
+            height: 30px;
+            margin-bottom: 10px;
+            display: block;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .collapsible {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .active, .collapsible:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .editor-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 150px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Select all collapsible buttons
+    const collapsibles = document.querySelectorAll(".collapsible");
+
+    // Ensure all sections are closed on page load
+    collapsibles.forEach(button => {
+        let content = button.nextElementSibling;
+        if (content) {
+            content.style.display = "none"; // Hide the content
+        }
+    });
+});
+</script>
+<div style="display: flex; justify-content: flex-end;">
+    <a href="#" onclick="openSameSizePopup()">[Help]</a>
+    <a href="/">[Return]</a>
+</div>
+
+    <h1>Draft Cover Letter</h1>
+
+    <section>
+        <button class="collapsible">Personal Information</button>
+        <div class="content">
+            <label>Full Name:</label>
+            <input type="text" id="fullName" placeholder="Full Name">
+            <label>Phone Number:</label>
+            <input type="text" id="phone" placeholder="Phone Number">
+            <label>Email Address:</label>
+            <input type="email" id="email" placeholder="Email Address">
+            <label>LinkedIn Profile:</label>
+            <input type="text" id="linkedin" placeholder="LinkedIn Profile">
+            <label>Portfolio/Website:</label>
+            <input type="text" id="portfolio" placeholder="Portfolio/Website">
+            <label>Location (City, State):</label>
+            <input type="text" id="location" placeholder="City, State">
+        </div>
+    </section>
+        <button class="collapsible">Company Information</button>
+        <div class="content">
+            <label>Company Name:</label>
+            <input type="text" id="companyName" placeholder="Compnay Name">
+            <label>Company Address:</label>
+            <input type="text" id="companyAddress" placeholder="Company Address"
+            <label>Location (City, State):</label>
+            <input type="text" id="companyLocation" placeholder="City, State">
+        </div>
+    </section>
+
+<section><button class="collapsible">First Paragraph</button>    <div class="container">
+    <h3>Guidelines for the First Paragraph of a Cover Letter</h3>
+    <p>The first paragraph of your cover letter is crucial because it sets the tone and captures the hiring manager’s attention. Here’s how to structure it effectively:</p>
+
+    1️⃣ <strong>Start with Enthusiasm</strong>
+    <p>Show excitement for the role and company.</p>
+    <p>Mention the specific job title you’re applying for.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "I am excited to apply for the [Job Title] position at [Company Name], as advertised on [Job Board/Company Website]. With my background in [Your Industry/Field], I am eager to contribute to your team’s success."
+    </div>
+
+     2️⃣ <strong>Highlight Your Value Proposition</strong>
+    <p>Briefly state why you are a strong candidate.</p>
+    <p>Mention a key strength or accomplishment that makes you a good fit.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "With [X years] of experience in [your field], I have developed a strong skill set in [mention key skills]. My recent work at [Previous Company] led to [mention an achievement], which aligns well with your company’s goals."
+    </div>
+
+    3️⃣<strong>Show Knowledge of the Company</strong>>
+    <p>Demonstrate that you’ve researched the company.</p>
+    <p>Mention something specific about their mission, projects, or culture.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "I am particularly drawn to [Company Name] because of its commitment to [specific company value, initiative, or project]. Your recent [mention a company achievement] resonated with me, and I am eager to bring my skills to your team."
+    </div>
+
+   🚀 <strong>Strong First Paragraph Template</strong>
+    <div class="template">
+        "Dear [Hiring Manager's Name],<br>
+        I am excited to apply for the [Job Title] position at [Company Name]. With [X years] of experience in [Your Industry], I have honed my skills in [mention key skills or achievements]. I am particularly drawn to [Company Name] because of its commitment to [specific company value or initiative], and I am eager to contribute to your team."
+    </div>
+
+        <div id="summaryTextEditor" class="editor-container"></div>
+   </div>
+</section>
+
+<section><button class="collapsible">Middle Paragraphs</button><div class="container">
+    <h3>Guidelines for the Middle Paragraphs of a Cover Letter</h3>
+    <p>The middle paragraphs of your cover letter are where you provide proof of your skills, highlight your achievements, and connect your experience to the company’s needs. Here’s how to structure them effectively:</p>
+
+   1️⃣ <strong>Showcase Your Relevant Skills & Experience</strong>
+    <p>Focus on 2-3 key skills or accomplishments that make you a strong fit.</p>
+    <p>Use specific examples to demonstrate your impact in previous roles.</p>
+    <p>Show how your experience aligns with the job requirements.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "At [Previous Company], I led a team of [X] members and implemented [specific project or initiative], which resulted in [achievement, such as cost savings, efficiency improvements, increased revenue, etc.]. I take pride in my ability to [key skill related to the job]."
+    </div>
+
+    2️⃣ <strong>Quantify Your Achievements (If Possible)</strong>
+    <p>Use numbers, percentages, or measurable results to make your accomplishments more impactful.</p>
+    <p>Employers love to see data-backed success rather than vague statements.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "In my last role as [Job Title] at [Company], I optimized [a process or system], reducing [specific inefficiency] by <strong>30%</strong> and increasing productivity by <strong>20%</strong>. My ability to analyze data and implement strategic improvements makes me confident in my ability to contribute to [Company Name]."
+    </div>
+
+    3️⃣<strong>Show How You Can Solve Their Problems</strong>
+    <p>Research the company’s challenges, goals, or recent projects.</p>
+    <p>Explain how your skills & experience will help them succeed.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "I understand that [Company Name] is expanding its [specific department or initiative]. With my expertise in [relevant skill], I am eager to contribute to your efforts by [how you can help solve their challenge or support their mission]."
+    </div>
+
+    4️⃣<strong>Demonstrate Your Fit for the Company Culture</strong>
+    <p>Highlight any shared values or alignment with the company’s mission.</p>
+    <p>Mention a recent company achievement, project, or initiative you admire.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "What excites me most about [Company Name] is your commitment to [specific value, such as innovation, sustainability, customer success, etc.]. At [Previous Company], I thrived in a similar culture, where [describe how you align with their values]."
+    </div>
+
+   🚀 <strong>Middle Paragraphs Template</strong>
+    <div class="template">
+        "In my role as [Job Title] at [Previous Company], I successfully [describe an achievement], leading to [quantifiable impact, such as percentage growth, revenue increase, cost reduction]. My experience in [relevant skill] has allowed me to [explain how it relates to the new job].<br><br>
+        Additionally, I understand that [Company Name] is focusing on [mention a company goal or challenge]. With my expertise in [relevant skill or experience], I am eager to contribute by [explain how you can add value]."
+        <div id="skillsTextEditor" class="editor-container"></div>
+    </div>
+</section>
+
+<section><button class="collapsible">Ending Paragraph</button><div class="content">
+    <h3>Guidelines for the Ending Paragraph of a Cover Letter</h3>
+    <p>The closing paragraph of your cover letter is your final chance to leave a strong impression. It should be confident, action-oriented, and appreciative while reinforcing your enthusiasm for the role. Here’s how to craft it effectively:</p>
+
+    1️⃣ <strong>Express Enthusiasm & Confidence</strong>
+    <p>Reaffirm your interest in the position.</p>
+    <p>Highlight your confidence in contributing value to the company.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "I am eager for the opportunity to bring my skills in [specific skill] to [Company Name] and contribute to your team’s success. I am confident that my experience aligns well with your needs."
+    </div>
+
+    2️⃣ <strong>Include a Call to Action (Encourage Next Steps)</strong>
+    <p>Express interest in discussing your application further.</p>
+    <p>Politely request an interview or meeting.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "I welcome the opportunity to further discuss how my experience can benefit [Company Name]. I would be happy to meet at your convenience to explore how I can contribute to your team."
+    </div>
+
+    3️⃣ <strong>Show Appreciation</strong>
+    <p>Thank the hiring manager for their time and consideration.</p>
+    <p>Keep it concise and professional.</p>
+    <div class="example">
+        ✅ Example:<br>
+        "Thank you for your time and consideration. I look forward to the possibility of contributing to your team and hope to hear from you soon."
+    </div>
+
+    🚀 <strong>Strong Closing Paragraph Template</strong>
+    <div class="template">
+        "I am excited about the opportunity to contribute my expertise in [key skill] to [Company Name]. I welcome the chance to discuss how my experience aligns with your needs and would love the opportunity for an interview at your convenience. Thank you for your time and consideration—I look forward to hearing from you soon."
+       <div id="workTextEditor" class="editor-container"></div>
+    </div>
+</section>
+<section><button class="collapsible">Sign off</button><div class="content">
+        <h3>Sign Off</h3>
+        <p>Enter sign off here saying "Warm regards," next line [Your Name] in text box or something similar.</p>
+        <div id="refTextEditor" class="editor-container"></div>
+    </div>
+</section>
+
+
+
+
+    <button onclick="downloadRTFfile()">Download as RTF</button>
+{% raw %}
+    <script>
+        document.querySelectorAll(".collapsible").forEach(button => {
+            button.addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                content.style.display = content.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        // Initialize Quill Editor
+        var quillSummary = new Quill('#summaryTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your professional summary here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+
+         // Initialize Quill Editor
+        var quillSkills = new Quill('#skillsTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your kill skills here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+         // Initialize Quill Editor
+        var quillWork = new Quill('#workTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your work experience here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+        var quillRef = new Quill('#refTextEditor', {
+            theme: 'snow',
+            placeholder: 'Write your references here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link']
+                ]
+            }
+        });
+
+
+       // Function to Extract Formatted Content
+        function getFormattedContent() {
+            return quillSummary.root.innerHTML;
+        }
+       // Function to Extract Formatted Content
+        function getFormattedContent1() {
+            return quillSkills.root.innerHTML;
+        }
+
+       // Function to Extract Formatted Content
+        function getFormattedContent2() {
+            return quillWork.root.innerHTML;
+        }
+
+       // Function to Extract Formatted Content
+        function getFormattedContent11() {
+            return quillRef.root.innerHTML;
+        }
+
+        function downloadRTFfile() {
+            let content = "";
+
+    // Adding Personal Information Conditionally
+    let personalInfo = [
+        { id: "fullName", label:"" },
+        { id: "location", label:"" },
+        { id: "phone", label:"Phone Number: " },
+        { id: "email", label: "Email Address: " },
+        { id: "linkedin", label: "LinkedIn Profile: " },
+        { id: "portfolio", label: "Portfolio/Website: " }
+    ];
+
+    let personalSection = "";
+    let hasPersonalInfo = false;
+
+    personalInfo.forEach(field => {
+        let inputElement = document.getElementById(field.id);
+        if (inputElement && inputElement.value.trim() !== "") {
+            if (!hasPersonalInfo) {
+                personalSection += "\n\n"; // Add section header only if data exists
+                hasPersonalInfo = true;
+            }
+            personalSection += `${field.label}${inputElement.value}\n <br>`;
+        }
+    });
+
+    if (hasPersonalInfo) {
+        content += personalSection + "<br>";
+    }
+
+    // Adding Company Information Conditionally
+    let companyInfo = [
+        { id: "companyName", label:"" },
+        { id: "companyAddress", label:"" },
+        { id: "companyLocation", label:"" }
+    ];
+
+    let companySection = "";
+    let hasCompanyInfo = false;
+
+    companyInfo.forEach(field => {
+        let inputElement = document.getElementById(field.id);
+        if (inputElement && inputElement.value.trim() !== "") {
+            if (!hasCompanyInfo) {
+                companySection += "<br>"; // Add section header only if data exists
+                hasCompanyInfo = true;
+            }
+            companySection += `${field.label}${inputElement.value}\n <br>`;
+        }
+    });
+
+    if (hasCompanyInfo) {
+        content += companySection + "<br>";
+    }
+
+
+            let summaryContent = getFormattedContent();
+            if (summaryContent.trim() !== "<p><br></p>") {
+                content += "\n\n<br>" + summaryContent.replace(/<br>/g, "\n") + "\n";
+            }
+            let skillsContent = getFormattedContent1();
+            if (skillsContent.trim() !== "<p><br></p>") {
+                content += "\n\n<br>" + skillsContent.replace(/<br>/g, "\n") + "\n";
+            }
+            let workContent = getFormattedContent2();
+            if (workContent.trim() !== "<p><br></p>") {
+                content += "\n\n<br>" + workContent.replace(/<br>/g, "\n") + "\n";
+            }
+            let refContent = getFormattedContent11();
+            if (refContent.trim() !== "<p><br></p>") {
+                content += "\n\<br>" + refContent.replace(/<br>/g, "\n") + "\n";
+            }
+
+
+
+            let content2 = convertHtmlToRtf(content);
+
+            let blob = new Blob([content2], { type: "text/plain" });
+
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "draft_cover_letter.rtf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+    // Adding Text from Other Sections
+    document.querySelectorAll("section").forEach(section => {
+        let headerElement = section.querySelector("button.collapsible");
+        let textBox = section.querySelector("textarea");
+
+        if (headerElement && textBox && textBox.value.trim() !== "") {
+            content += `\n\n### ${headerElement.innerText}\n`;
+            content += textBox.value + "\n";
+        }
+    });
+
+function convertHtmlToRtf(html) {
+    if (!(typeof html === "string" && html)) {
+        return null;
+    }
+
+    var tmpRichText, hasHyperlinks;
+    var richText = html;
+
+    // Normalize special characters to ASCII equivalents
+    richText = richText.replace(/[—–]/g, "-"); // Replace en-dash and em-dash with hyphen
+    richText = richText.replace(/[‘’]/g, "'"); // Replace curly single quotes with straight quote
+
+    // Delete HTML comments
+    richText = richText.replace(/<!--[\s\S]*?-->/ig, "");
+
+    // Singleton tags
+    richText = richText.replace(/<(?:hr)(?:\s+[^>]*)?\s*[\/]?>/ig, "{\\pard \\brdrb \\brdrs \\brdrw10 \\brsp20 \\par}\n{\\pard\\par}\n");
+    richText = richText.replace(/<(?:br)(?:\s+[^>]*)?\s*[\/]?>/ig, "{\\pard\\par}\n");
+
+    // Empty tags
+    richText = richText.replace(/<(?:p|div|section|article)(?:\s+[^>]*)?\s*[\/]>/ig, "{\\pard\\par}\n");
+    richText = richText.replace(/<(?:[^>]+)\/>/g, "");
+
+    // Hyperlinks
+    richText = richText.replace(
+        /<a(?:\s+[^>]*)?(?:\s+href=(["'])(?:javascript:void\(0?\);?|#|return false;?|void\(0?\);?|)\1)(?:\s+[^>]*)?>/ig,
+        "{{{\n"
+    );
+    tmpRichText = richText;
+    richText = richText.replace(
+        /<a(?:\s+[^>]*)?(?:\s+href=(["'])(.+)\1)(?:\s+[^>]*)?>/ig,
+        "{\\field{\\*\\fldinst{HYPERLINK\n \"$2\"\n}}{\\fldrslt{\\ul\\cf1\n"
+    );
+    hasHyperlinks = richText !== tmpRichText;
+    richText = richText.replace(/<a(?:\s+[^>]*)?>/ig, "{{{\n");
+    richText = richText.replace(/<\/a(?:\s+[^>]*)?>/ig, "\n}}}");
+
+    // Start tags
+    richText = richText.replace(/<(?:b|strong)(?:\s+[^>]*)?>/ig, "{\\b\n");
+    richText = richText.replace(/<(?:i|em)(?:\s+[^>]*)?>/ig, "{\\i\n");
+    richText = richText.replace(/<(?:u|ins)(?:\s+[^>]*)?>/ig, "{\\ul\n");
+    richText = richText.replace(/<(?:strike|del)(?:\s+[^>]*)?>/ig, "{\\strike\n");
+    richText = richText.replace(/<sup(?:\s+[^>]*)?>/ig, "{\\super\n");
+    richText = richText.replace(/<sub(?:\s+[^>]*)?>/ig, "{\\sub\n");
+    richText = richText.replace(/<(?:p|div|section|article)(?:\s+[^>]*)?>/ig, "{\\pard\n");
+    richText = richText.replace(/<(?:h1|h2|h3|h4|h5|h6)(?:\s+[^>]*)?>/ig, "{\\pard\\par}{\\pard\\b\n");
+    richText = richText.replace(/<(?:ol)(?:\s+[^>]*)?>/ig,
+        "{\\pard\\par}{{\\*\\pn\\pnlvlbody\\pnindent0\\pnstart1\\pndec{\\pntxta.}}\\fi-240\\li720\\sa200\\sl180\\slmult1"
+    );
+    richText = richText.replace(/<(?:ul)(?:\s+[^>]*)?>/ig,
+        "{\\pard\\par}{{\\*\\pn\\pnlvlblt\\pnf1\\pnindent0{\\pntxtb\\\'B7}}\\fi-240\\li720\\sa200\\sl180\\slmult1"
+    );
+    richText = richText.replace(/<(?:li)(?:\s+[^>]*)?>/ig, "{\\pntext\\tab}");
+
+    // End tags
+    richText = richText.replace(/<\/(?:p|div|section|article)(?:\s+[^>]*)?>/ig, "\n\\par}\n");
+    richText = richText.replace(/<\/(?:h1|h2|h3|h4|h5|h6)(?:\s+[^>]*)?>/ig, "\n\\par}\n");
+    richText = richText.replace(/<\/(?:b|strong|i|em|u|ins|strike|del|sup|sub|ol|ul)(?:\s+[^>]*)?>/ig, "\n}");
+    richText = richText.replace(/<\/(?:li)(?:\s+[^>]*)?>/ig, "\\par");
+
+    // Strip any other remaining HTML tags [but leave their contents]
+    richText = richText.replace(/<(?:[^>]+)>/g, "");
+
+    // Remove empty line at the beginning of the text
+    richText = richText.startsWith("{\\pard\\par}") ? richText.substring(11) : richText;
+
+    // Prefix and suffix the rich text with the necessary RTF syntax, explicitly using ANSI encoding
+    richText = "{\\rtf1\\ansi\\deff0\n" + (hasHyperlinks ? "{\\colortbl\n;\n\\red0\\green0\\blue255;\n}\n" : "") + richText + "\n}";
+
+    return richText;
+}
+
+function openSameSizePopup() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const left = window.screenX;
+  const top = window.screenY;
+
+  window.open(
+    'cover-letter-help',
+    'videoWindow',
+    `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+  );
+}
+</script>
+
+{% endraw %}
+</body>
+</html>

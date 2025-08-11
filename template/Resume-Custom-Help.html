@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Custom Resume</title>
+    <style>
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            margin-left: 0;
+        }
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: flex-end;">
+        <a href="{{ url_for('index') }}">[Return]</a>
+    </div>
+    <h1>Help - Custom Resume</h1>
+    <div class="video-container">
+        <video controls>
+            <source src="/static/video/Help-CustomResume.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <h2>Links to Consider</h2>
+    <ul>
+        <li><a href="https://www.churchofjesuschrist.org/life/written-materials?lang=eng">Resume Help</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/life/online-employment-workshops?lang=eng">Attend a Live Resume Workshop</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/life/tips-for-how-to-create-a-resume?lang=eng">Tip For How to Create a Resume</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/life/how-to-write-a-cv?lang=eng">How to write a CV</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/life/ask-an-expert-forum?lang=eng">Ask an Expert</a></li>
+        <li><a href="https://employmentservices.churchofjesuschrist.org/jobSeekers">Get Personilized Help</a></li>
+        <li><a href="https://www.churchofjesuschrist.org/life/accelerated-job-search?lang=eng">Join a Job Search Group</a></li>
+   </ul>
+    <a href="https://www.churchofjesuschrist.org/?lang=eng"><strong>The Church of Jesus Christ of Latter-day Saints</strong></a>
+</body>
+</html>

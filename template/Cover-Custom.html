@@ -1,0 +1,223 @@
+<!-- 👇 Start of the updated version of your first file 👇 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cover Letter Customizer</title>
+  <style>
+    /* Same CSS as you already had (abbreviated here) */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px 20px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .blue-btn { background-color: #007BFF; color: white; }
+    .blue-btn:hover { background-color: #0056b3; }
+    .green-btn { background-color: #28a745; color: white; }
+    .green-btn:hover { background-color: #218838; }
+    #output {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9ecef;
+      border-radius: 5px;
+      min-height: 100px;
+      text-align: left;
+    }
+    #emailModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    #emailModalContent {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      width: 80%;
+      max-width: 400px;
+      margin: 15% auto;
+      text-align: center;
+    }
+    #emailModalContent input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="emailModal">
+      <div id="emailModalContent">
+        <h2>Please Enter Your Email</h2>
+        <input type="email" id="userEmailInput" placeholder="your@email.com">
+        <button onclick="saveEmail()">Save Email</button>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end;"><a href="/">[Return]</a></div>
+    <div style="text-align: left;">
+      <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+        <img src="static/Help-AI.png" style="height: 90px; display: block;">
+      </a>
+    </div>
+
+    <h2>Customize Your Cover Letter to the Job</h2>
+    <textarea id="jobCover" placeholder="Paste your cover letter here..."></textarea>
+    <textarea id="jobPost" placeholder="Paste your job posting here..."></textarea>
+    <button class="green-btn" onclick="improveResume()">Submit</button>
+    <h3>Custom Cover Letter:</h3>
+    <div id="loadingMessage" style="display: none;">Loading Please Wait a couple of minutes...</div>
+    <div id="output"></div>
+
+    <button class="blue-btn" onclick="downloadRTFfile()">Download as RTF</button>
+    <button class="blue-btn" onclick="handleEmail()">Email Myself</button>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!localStorage.getItem("cover_email")) {
+        document.getElementById("emailModal").style.display = "block";
+      }
+    });
+
+    function saveEmail() {
+      const email = document.getElementById("userEmailInput").value;
+      if (email && email.includes("@")) {
+        localStorage.setItem("cover_email", email);
+        document.getElementById("emailModal").style.display = "none";
+        alert("Email saved successfully!");
+      } else {
+        alert("Please enter a valid email.");
+      }
+    }
+
+    async function improveResume() {
+      const jobCover = document.getElementById("jobCover").value;
+      const jobPost = document.getElementById("jobPost").value;
+      const output = document.getElementById("output");
+
+      if (!jobCover.trim() || !jobPost.trim()) {
+        alert("Please enter both the cover letter and job posting.");
+        return;
+      }
+
+      document.getElementById("loadingMessage").style.display = "block";
+      output.innerText = "";
+
+      try {
+        const response = await fetch('/improve-custom-cover', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ job_cover: jobCover, job_posting: jobPost })
+        });
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        output.innerText = data.improved_cover_letter || "Success but no content returned.";
+      } catch (error) {
+        output.innerText = "Error: " + error.message;
+      } finally {
+        document.getElementById("loadingMessage").style.display = "none";
+      }
+    }
+
+    function downloadRTFfile() {
+      const content = document.getElementById("output").innerText.trim();
+      if (!content) return alert("Nothing to download.");
+      const rtf = `{\\rtf1\\ansi\\deff0{\\fonttbl{\\f0 Arial;}}\\f0\\fs20 ${content.replace(/\n/g, "\\line ")}}`;
+      const blob = new Blob([rtf], { type: "application/rtf" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "cover_letter.rtf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function handleEmail() {
+      let storedEmail = localStorage.getItem("cover_email");
+      if (!storedEmail) {
+        storedEmail = prompt("Enter your email:");
+        if (!storedEmail || !storedEmail.includes("@")) {
+          alert("Invalid email.");
+          return;
+        }
+        localStorage.setItem("cover_email", storedEmail);
+      }
+
+      const content = document.getElementById("output").innerText.trim();
+      if (!content) return alert("Generate a letter first.");
+
+      const formData = new FormData();
+      formData.append("email", storedEmail);
+      formData.append("subject", "Your Customized Cover Letter");
+      formData.append("message", content);
+
+      fetch("/send-resume-email", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success || data.message) {
+          alert("Email sent successfully to " + storedEmail);
+        } else {
+          alert("Failed: " + (data.error || "Unknown error"));
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Network error sending email");
+      });
+    }
+
+    function openSameSizePopup() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const left = window.screenX;
+      const top = window.screenY;
+
+      window.open(
+        'custom-cover-help',
+        'videoWindow',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+      );
+    }
+  </script>
+</body>
+</html>
+<!-- 👆 End of file 👆 -->

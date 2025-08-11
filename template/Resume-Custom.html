@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Resume Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h2 {
+            color: #0044cc;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .greenbtn {
+            background-color: #28a745;
+        }
+        .greenbtn:hover {
+            background-color: #218838;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 100px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #007BFF;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .return-link {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        .help-icon {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="return-link">
+            <a href="/">[Return]</a>
+        </div>
+
+        <div class="help-icon">
+            <a href="#" onclick="openHelpPopup()" title="Help Video">
+                <img src="static/Help-Custom2Job.png" style="height: 90px; display: block;">
+            </a>
+        </div>
+
+        <h2>Customize Your Resume for the Job</h2>
+
+        <h3>Your Resume</h3>
+        <textarea id="jobCover" placeholder="Paste your current resume here..."></textarea>
+
+        <h3>Job Posting</h3>
+        <textarea id="jobPost" placeholder="Paste the job posting you're applying for here..."></textarea>
+
+        <button class="greenbtn" onclick="improveResume()">Generate Custom Resume</button>
+
+        <div id="loadingMessage" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Processing your resume... Please wait...</p>
+        </div>
+
+        <h3>Customized Resume:</h3>
+        <div id="output">Your customized resume will appear here...</div>
+
+        <button onclick="downloadtoRTF()">Download as RTF</button>
+        <button onclick="handleEmail()">Email Myself</button>
+    </div>
+
+    <script>
+        // Main function to improve resume
+        async function improveResume() {
+            const jobCover = document.getElementById("jobCover").value;
+            const jobPost = document.getElementById("jobPost").value;
+
+            if (!jobCover.trim() || !jobPost.trim()) {
+                alert("Please enter both your resume and the job posting.");
+                return;
+            }
+
+            // Show loading message and clear previous output
+            document.getElementById("loadingMessage").style.display = "block";
+            document.getElementById("output").innerText = "Processing...";
+
+            try {
+                const response = await fetch('/improve-custom-resume', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        job_resume: jobCover,
+                        job_posting: jobPost
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    throw new Error(errorData?.error || `Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                document.getElementById("output").innerText = data.improved_cover_letter || "Custom resume generated successfully!";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("output").innerText = "Error: " + error.message;
+            } finally {
+                document.getElementById("loadingMessage").style.display = "none";
+            }
+        }
+
+        // Download as RTF function
+        function downloadtoRTF() {
+            const resumeText = document.getElementById("output").innerText.trim();
+
+            if (!resumeText) {
+                alert("No resume content to download.");
+                return;
+            }
+
+            // Simple RTF formatting
+            const rtfContent = `{\\rtf1\\ansi\\deff0
+{\\fonttbl{\\f0 Arial;}}
+\\f0\\fs24
+${resumeText.replace(/\n/g, '\\line ')}
+}`;
+
+            const blob = new Blob([rtfContent], { type: "application/rtf" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "custom_resume.rtf";
+            link.click();
+        }
+
+        // Email function
+        function handleEmail() {
+    const resumeText = document.getElementById("output").innerText.trim();
+
+    if (!resumeText) {
+        alert("No resume content to send.");
+        return;
+    }
+
+    const storedEmail = sessionStorage.getItem("userEmail");
+    if (!storedEmail) {
+        const userEmail = prompt("Please enter your email address:");
+        if (userEmail && validateEmail(userEmail)) {
+            sessionStorage.setItem("userEmail", userEmail);
+            // Now that we have the email, call the function again
+            handleEmail();
+        } else {
+            alert("Invalid email address. Please try again.");
+        }
+        return;
+    }
+
+    // Create FormData object
+    const formData = new FormData();
+    formData.append('email', storedEmail);
+    formData.append('subject', 'Your Customized Resume');
+    formData.append('message', resumeText);
+
+    // Show loading indicator
+    const originalText = document.querySelector("button[onclick='handleEmail()']").innerText;
+    document.querySelector("button[onclick='handleEmail()']").innerText = "Sending...";
+
+    // Send to your Flask endpoint
+    fetch('/send-resume-email', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Resume sent successfully to ${storedEmail}`);
+        } else {
+            alert(`Failed to send email: ${data.error || 'Unknown error'}`);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to send email. Please try again.");
+    })
+    .finally(() => {
+        document.querySelector("button[onclick='handleEmail()']").innerText = originalText;
+    });
+}
+
+        // Email validation helper
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Help popup function
+        function openHelpPopup() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const left = window.screenX;
+            const top = window.screenY;
+
+            window.open(
+                '/custom-resume-help',
+                'helpWindow',
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+            );
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Question Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h2 {
+            color: #0044cc;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .greenbtn {
+             background-color: #28a745;
+        }
+        .greenbtn:hover {
+            background-color: #218838;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-size: 16px;
+            min-height: 100px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        .blue-btn {
+            background-color: #007BFF;
+        }
+        .blue-btn:hover {
+            background-color: #0056b3;
+        }
+        #emailModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        #emailModalContent {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        #emailModalContent input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #emailModalContent button {
+            width: auto;
+            padding: 8px 16px;
+            margin: 5px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #007BFF;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; justify-content: flex-end;">
+            <a href="/">[Return]</a>
+        </div>
+        <div style="text-align: left;">
+            <a href="#" onclick="openSameSizePopup()" title="Watch Help Video">
+                <img src="static/Help-AI.png" style="height: 90px; display: block;">
+            </a>
+        </div>
+
+        <div id="emailModal">
+            <div id="emailModalContent">
+                <h2>Please Enter Your Email</h2>
+                <p>We'll use this email to send your interview questions.</p>
+                <input type="email" id="userEmailInput" placeholder="your@email.com">
+                <button onclick="saveEmail()">Save Email</button>
+            </div>
+        </div>
+
+        <div>
+            <h2>Generate Interview Question</h2>
+            <input type="text" id="jobTitleInput" placeholder="Enter job title (e.g., Software Engineer)">
+            <textarea id="resumeInput" placeholder="Paste job description here to generate interview questions..."></textarea>
+            <button class="greenbtn" onclick="generateQuestions()">Generate Interview Questions</button>
+            <h3>Generated Interview Questions:</h3>
+            <div id="loadingMessage" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>Generating questions... Please wait...</p>
+            </div>
+            <div id="output"></div>
+            <button class="blue-btn" onclick="downloadRTFfile()">Download as RTF</button>
+            <button class="blue-btn" onclick="handleEmail()">Email Myself</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (!localStorage.getItem("resume_email")) {
+                document.getElementById("emailModal").style.display = "block";
+            }
+        });
+
+        function saveEmail() {
+            const email = document.getElementById("userEmailInput").value;
+            if (email && email.includes("@")) {
+                localStorage.setItem("resume_email", email);
+                document.getElementById("emailModal").style.display = "none";
+                alert("Email saved successfully!");
+            } else {
+                alert("Please enter a valid email address");
+            }
+        }
+
+        async function generateQuestions() {
+            const jobTitle = document.getElementById("jobTitleInput").value;
+            const jobDescription = document.getElementById("resumeInput").value;
+
+            if (!jobTitle.trim()) {
+                alert("Please enter a job title.");
+                return;
+            }
+
+            if (!jobDescription.trim()) {
+                alert("Please enter a job description to generate questions.");
+                return;
+            }
+
+            document.getElementById("loadingMessage").style.display = "block";
+            document.getElementById("output").innerText = "";
+
+            try {
+                const response = await fetch('/generate-interview-questions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        job_title: jobTitle,
+                        job_description: jobDescription
+                    })
+                });
+                const data = await response.json();
+
+                document.getElementById("loadingMessage").style.display = "none";
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                document.getElementById("output").innerText = data.questions;
+            } catch (error) {
+                document.getElementById("loadingMessage").style.display = "none";
+                document.getElementById("output").innerText = "Error generating questions: " + error.message;
+            }
+        }
+
+        function downloadRTFfile() {
+            const questionsText = document.getElementById("output").innerText.trim();
+
+            if (!questionsText) {
+                alert("No questions generated to download.");
+                return;
+            }
+
+            const rtfContent = `{\\rtf1\\ansi\\deff0{\\fonttbl{\\f0 Arial;}}\\f0\\fs20 ${questionsText.replace(/\n/g, "\\line ")}}`;
+            const blob = new Blob([rtfContent], { type: "application/rtf" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "interview_questions.rtf";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+function handleEmail() {
+    const resumeText = document.getElementById("output").innerText.trim();
+
+    if (!resumeText) {
+        alert("No resume content to send.");
+        return;
+    }
+
+    let storedEmail = localStorage.getItem("resume_email");
+
+    if (!storedEmail) {
+        const userEmail = prompt("Please enter your email address:");
+        if (userEmail && validateEmail(userEmail)) {
+            localStorage.setItem("resume_email", userEmail);
+            storedEmail = userEmail;
+        } else {
+            alert("Invalid email address. Please try again.");
+            return;
+        }
+    }
+
+    const formData = new FormData();
+    formData.append('email', storedEmail);
+    formData.append('subject', 'Your Customized Interview Questions');
+    formData.append('message', resumeText);
+
+    const emailButton = document.querySelector("button[onclick='handleEmail()']");
+    const originalText = emailButton.innerText;
+    emailButton.innerText = "Sending...";
+
+    fetch('/send-resume-email', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Email sent successfully to ${storedEmail}`);
+        } else {
+            alert(`Failed to send email: ${data.error || 'Unknown error'}`);
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to send email. Please try again.");
+    })
+    .finally(() => {
+        emailButton.innerText = originalText;
+    });
+}
+
+function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
+
+        function openSameSizePopup() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const left = window.screenX;
+            const top = window.screenY;
+
+            window.open(
+                'interview-help',
+                'videoWindow',
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes`
+            );
+        }
+    </script>
+</body>
+</html>
